@@ -17,6 +17,9 @@ export const ListItem = styled.li<{ isActive?: boolean }>`
   align-items: center;
   margin-top: ${space(1)};
   padding: ${space(0, 3)};
+  a {
+    text-decoration: none;
+  }
   background: ${(props) =>
     props.isActive ? color("gray", 700)(props) : "transparent"};
   border-radius: 6px;
