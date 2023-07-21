@@ -43,6 +43,8 @@ export type Theme = {
   };
   size: {
     headerHeight: string;
+    footerContainer: string;
+    footerInnerContainer: string;
   };
   breakpoint: {
     desktop: string;
@@ -148,6 +150,8 @@ export const theme = {
   },
   size: {
     headerHeight: "4rem",
+    footerContainer: "3.75rem",
+    footerInnerContainer: "2.06rem",
   },
   breakpoint: {
     desktop: "64em",
@@ -279,4 +283,8 @@ export function displayFont(
   weight: keyof Font
 ) {
   return ({ theme }: { theme: Theme }) => theme.font.display[size][weight];
+}
+
+export function size(name: keyof Theme["size"]) {
+  return ({ theme }: { theme: Theme }) => theme.size[name];
 }
