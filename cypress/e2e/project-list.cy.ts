@@ -25,6 +25,8 @@ describe("Project List", () => {
 
       // get all project cards
       cy.get("main")
+        .find("ul")
+        .first()
         .find("li")
         .each(($el, index) => {
           // check that project data is rendered
