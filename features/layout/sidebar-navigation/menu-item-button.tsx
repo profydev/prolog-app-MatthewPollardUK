@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@features/ui";
-import { ListItem, Anchor, Icon } from "./menu-item-link";
+import { ListItem, Anchor, Icon } from "./app-menu-item-link";
 import styled from "styled-components";
 import { color } from "@styles/theme";
 

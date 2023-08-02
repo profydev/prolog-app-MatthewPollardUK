@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { Routes } from "@config/routes";
 import { NavigationContext } from "./navigation-context";
 import { MenuItemButton } from "./menu-item-button";
-import { MenuItemLink } from "./menu-item-link";
+import { AppMenuItemLink } from "./app-menu-item-link";
 import { Button } from "@features/ui";
 import { breakpoint, color, space, zIndex } from "@styles/theme";
 
@@ -94,6 +94,7 @@ const MenuOverlay = styled.div<{ isMobileMenuOpen: boolean }>`
   width: 100%;
   height: 100vh;
   background-color: ${color("gray", 700)};
+
   z-index: ${(props) => zIndex("header")(props) - 1};
 
   opacity: ${({ isMobileMenuOpen }) => (isMobileMenuOpen ? "60%" : "0%")};
@@ -172,7 +173,11 @@ export function SidebarNavigation() {
           />
           <MenuButton onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
             <MenuIcon
-              src={isMobileMenuOpen ? "/icons/close.svg" : "/icons/menu.svg"}
+              src={
+                isMobileMenuOpen
+                  ? "/icons/application-close.svg"
+                  : "/icons/application-menu.svg"
+              }
               alt={isMobileMenuOpen ? "close menu" : "open menu"}
             />
           </MenuButton>
@@ -181,7 +186,7 @@ export function SidebarNavigation() {
         <Nav isMobileMenuOpen={isMobileMenuOpen}>
           <LinkList>
             {menuItems.map((menuItem, index) => (
-              <MenuItemLink
+              <AppMenuItemLink
                 key={index}
                 {...menuItem}
                 isCollapsed={isSidebarCollapsed}
