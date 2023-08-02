@@ -80,6 +80,7 @@ export const theme = {
       800: "#1D2939",
       900: "#101828",
     },
+
     primary: {
       25: "#FCFAFF",
       50: "#F9F5FF",

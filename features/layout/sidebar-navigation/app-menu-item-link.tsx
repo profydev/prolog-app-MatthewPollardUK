@@ -41,7 +41,7 @@ export const Icon = styled.img`
   margin-right: ${space(3)};
 `;
 
-export function MenuItemLink({
+export function AppMenuItemLink({
   text,
   href,
   iconSrc,

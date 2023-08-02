@@ -9,4 +9,7 @@ export const Routes = {
   api: "#",
   help: "#",
   community: "#",
+  products: "/products",
+  documentation: "/documentation",
+  pricing: "/pricing",
 };

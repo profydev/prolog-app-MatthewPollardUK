@@ -5,7 +5,7 @@ import { SidebarNavigation } from "../sidebar-navigation";
 import { Footer } from "../footer";
 import { color, displayFont, textFont, space, breakpoint } from "@styles/theme";
 
-type PageContainerProps = {
+type AppPageContainerProps = {
   children: React.ReactNode;
   title: string;
   info: string;
@@ -53,7 +53,11 @@ const Info = styled.div`
   ${textFont("md", "regular")}
 `;
 
-export function PageContainer({ children, title, info }: PageContainerProps) {
+export function ApplicationPageContainer({
+  children,
+  title,
+  info,
+}: AppPageContainerProps) {
   // combine title in a single string to prevent below warning
   // "Warning: A title element received an array with more than 1 element as children."
   const documentTitle = `ProLog - ${title}`;
