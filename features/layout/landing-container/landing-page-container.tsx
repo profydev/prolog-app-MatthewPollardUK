@@ -1,19 +1,16 @@
 import React from "react";
 import Head from "next/head";
 import styled from "styled-components";
-import { breakpoint } from "@styles/theme";
+
 import { LandingHeader } from "./landing-header";
-import { ContactButton } from "../contact-button";
+import { ContactButton } from "./contact-button";
 
 type LandingPageContainerProps = {
   children: React.ReactNode;
   title: string;
 };
 
-const Container = styled.div`
-  @media (min-width: ${breakpoint("desktop")}) {
-  }
-`;
+const Container = styled.div``;
 const Main = styled.main`
   flex: 1;
 `;
