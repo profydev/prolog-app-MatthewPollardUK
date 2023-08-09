@@ -144,8 +144,8 @@ export function ContactButton() {
             <p className="contact-header">Contact Us Via Email</p>
 
             <p className="modal-text">
-              Any questions? Send us an email at prolog@profy.dev. We usually
-              answer within 24 hours
+              Any questions? Send us an email at prolog@profy.dev. We usually answer within 24 hours.
+
             </p>
             <OptionButtons>
               <button
