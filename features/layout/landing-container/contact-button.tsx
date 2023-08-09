@@ -145,7 +145,7 @@ export function ContactButton() {
 
             <p className="modal-text">
               Any questions? Send us an email at prolog@profy.dev. We usually
-              answer within 24 hours.{" "}
+              answer within 24 hours{" "}
             </p>
             <OptionButtons>
               <button
