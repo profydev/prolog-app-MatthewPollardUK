@@ -55,7 +55,7 @@ const Container = styled.div<{ size: BadgeSize; color: BadgeColor }>`
     switch (props.color) {
       case BadgeColor.gray:
         return css`
-          background: ${color("gray", 100)};
+          background: green;
           color: ${color("gray", 700)};
         `;
       default:

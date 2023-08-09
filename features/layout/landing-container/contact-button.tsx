@@ -137,7 +137,7 @@ export function ContactButton() {
 
           <LandingModalContent>
             <EmailSvg
-              src="/icons/email.svg"
+              src="/icons/mail.svg"
               alt="Contact"
               className="email-icon"
             />
