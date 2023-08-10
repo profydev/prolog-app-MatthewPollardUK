@@ -71,7 +71,7 @@ const LandingModalContent = styled.div`
     grid-column: 1 / span 6;
     text-align: center;
     color: ${color("gray", 900)};
-    ${textFont("lg", "medium")}
+    ${textFont("md", "medium")}
     margin-block-end: 0.7em;
   }
   p.modal-text {
