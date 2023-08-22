@@ -9,11 +9,11 @@ type MenuItemProps = {
   isActive: boolean;
 };
 
-export const ListItem = styled.li<{ isActive?: boolean }>`
+const ListItem = styled.li<{ isActive?: boolean }>`
   list-style-type: none;
 `;
 
-export const Anchor = styled(Link)`
+const Anchor = styled(Link)`
   display: flex;
   align-items: center;
   color: ${color("gray", 500)};
