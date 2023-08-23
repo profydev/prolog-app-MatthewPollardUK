@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { useState } from "react";
-import { textFont, color } from "@styles/theme";
+import { textFont, color, space, breakpoint } from "@styles/theme";
 import Image from "next/image";
 
 interface ModalOverlayProps {
@@ -8,18 +8,21 @@ interface ModalOverlayProps {
 }
 
 const ContactButtonContainer = styled.button`
-  position: absolute;
-  bottom: 2.5rem;
-  right: 2.5rem;
+  position: fixed;
+  bottom: ${space(6)};
+  right: ${space(6)};
   padding: 1rem;
   background: #7f56d9;
   border-radius: 50%;
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border: none;
   cursor: pointer;
-
   &:hover {
     background: #6941c6;
+  }
+  @media (min-width: ${breakpoint("desktop")}) {
+    bottom: ${space(10)};
+    right: ${space(10)};
   }
 `;
 
