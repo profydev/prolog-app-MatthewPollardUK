@@ -16,11 +16,9 @@ const ContainerOuterTestimonial = Styled.blockquote`
     margin-block-end: 0em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-      @media (min-width: ${breakpoint("desktop")}) {
-  
-  width: 375px;
-    height: 416px;
-
+ @media (min-width: ${breakpoint("desktop")}) {
+   max-width: 375px;
+    max-height: 100%;
       }
 `;
 
