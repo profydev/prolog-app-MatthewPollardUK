@@ -18,8 +18,8 @@ const ContainerOuterTestimonial = Styled.blockquote`
     margin-inline-end: 0px;
       @media (min-width: ${breakpoint("desktop")}) {
   
-  width: 375px;
-    height: 416px;
+  max-width: 375px;
+    max-height: 100%;
 
       }
 `;
