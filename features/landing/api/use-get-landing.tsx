@@ -5,6 +5,6 @@ import type { Landing } from "@api/landing.types";
 export function useGetLanding() {
   return useQuery<Landing, Error>(
     ["landing"], // Query key
-    getLanding // Fetch function
+    getLanding, // Fetch function
   );
 }

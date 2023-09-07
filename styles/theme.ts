@@ -348,14 +348,14 @@ export function zIndex(name: keyof Theme["zIndex"]) {
 
 export function textFont(
   size: keyof Theme["font"]["text"],
-  weight: keyof Font
+  weight: keyof Font,
 ) {
   return ({ theme }: { theme: Theme }) => theme.font.text[size][weight];
 }
 
 export function displayFont(
   size: keyof Theme["font"]["display"],
-  weight: keyof Font
+  weight: keyof Font,
 ) {
   return ({ theme }: { theme: Theme }) => theme.font.display[size][weight];
 }
