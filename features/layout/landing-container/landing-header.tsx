@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
 import { Routes } from "@config/routes";
-import { Button } from "@features/ui";
+
 import { breakpoint, color, textFont, zIndex } from "@styles/theme";
 import { LandingMenuItemLink } from "./landing-menu-item-link";
 
@@ -36,7 +36,21 @@ const HeaderContainer = styled.header`
 
 const Logo = styled.img``;
 
-const LandingMenuButton = styled(Button)`
+const LandingMenuButton = styled.button`
+  cursor: pointer;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
   @media (min-width: ${breakpoint("desktop")}) {
     display: none;
   }
@@ -59,7 +73,8 @@ const MenuOverlay = styled.div<{ isLandingMobileMenuOpen: boolean }>`
   transform: translateX(
     ${({ isLandingMobileMenuOpen }) => (isLandingMobileMenuOpen ? "0" : "100%")}
   );
-  transition: opacity 300ms,
+  transition:
+    opacity 300ms,
     transform 0s
       ${({ isLandingMobileMenuOpen }) =>
         isLandingMobileMenuOpen ? "0s" : "300ms"};

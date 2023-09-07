@@ -25,7 +25,7 @@ module.exports = {
 
   webpackFinal: async (config) => {
     config.resolve.alias["next/router"] = require.resolve(
-      "../__mocks__/next/router.tsx"
+      "../__mocks__/next/router.tsx",
     );
     config.resolve.alias["@api"] = path.resolve("./api");
     config.resolve.alias["@config"] = path.resolve("./config");
