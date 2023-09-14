@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 import { color, space } from "@styles/theme";
+import { useMediaQuery } from "react-responsive";
 
 type MenuItemProps = {
   text: string;
@@ -48,10 +49,13 @@ export function AppMenuItemLink({
   isActive,
   isCollapsed,
 }: MenuItemProps) {
+  const isSmallScreen = useMediaQuery({ maxWidth: 1023 });
+
   return (
     <ListItem isActive={isActive}>
       <Anchor href={href}>
-        <Icon src={iconSrc} alt={`${text} icon`} /> {!isCollapsed && text}
+        <Icon src={iconSrc} alt={`${text} icon`} />{" "}
+        {!isCollapsed || (isCollapsed && isSmallScreen) ? text : null}
       </Anchor>
     </ListItem>
   );
