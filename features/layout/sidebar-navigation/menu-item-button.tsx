@@ -3,6 +3,7 @@ import React from "react";
 import { ListItem, Anchor, Icon } from "./app-menu-item-link";
 import styled from "styled-components";
 import { color } from "@styles/theme";
+import { useMediaQuery } from "react-responsive";
 
 type ButtonMailToProps = {
   mailto: string;
@@ -64,6 +65,7 @@ export function MenuItemButton({
   isCollapsed,
   href,
 }: MenuItemProps) {
+  const isSmallScreen = useMediaQuery({ maxWidth: 1023 });
   return (
     <>
       {href ? (
@@ -82,7 +84,8 @@ export function MenuItemButton({
         <ListItem className={className}>
           <Anchor as={Button} onClick={onClick}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <Icon src={iconSrc} alt={`${text} icon`} /> {!isCollapsed && text}
+            <Icon src={iconSrc} alt={`${text} icon`} />{" "}
+            {!isCollapsed || (isCollapsed && isSmallScreen) ? text : null}
           </Anchor>
         </ListItem>
       )}
