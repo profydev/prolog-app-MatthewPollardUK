@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { breakpoint, space } from "@styles/theme";
 import { ProjectCard } from "../project-card";
 import { useGetProjects } from "../../api/use-get-projects";
+import { ErrorMessage } from "./project-error";
 
 const List = styled.ul`
   display: grid;
@@ -19,15 +20,14 @@ const List = styled.ul`
 `;
 
 export function ProjectList() {
-  const { data, isLoading, isError, error } = useGetProjects();
+  const { data, isLoading, isError } = useGetProjects();
 
   if (isLoading) {
     return <div>Loading</div>;
   }
 
   if (isError) {
-    console.error(error);
-    return <div>Error: {error.message}</div>;
+    return <ErrorMessage />;
   }
 
   return (
