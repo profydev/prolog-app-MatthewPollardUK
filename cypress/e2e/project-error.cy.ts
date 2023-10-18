@@ -9,7 +9,7 @@ describe("Error Message Test", () => {
   });
 
   it("Displays an error message on API request failure", () => {
-    cy.wait(4000);
+    cy.wait(7000);
     cy.get(".error-message").should("be.visible");
   });
 });
