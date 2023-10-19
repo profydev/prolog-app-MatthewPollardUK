@@ -3,6 +3,7 @@ import { breakpoint, space } from "@styles/theme";
 import { ProjectCard } from "../project-card";
 import { useGetProjects } from "../../api/use-get-projects";
 import { ErrorMessage } from "./project-error";
+import { Spinner } from "./spinner";
 
 const List = styled.ul`
   display: grid;
@@ -23,7 +24,7 @@ export function ProjectList() {
   const { data, isLoading, isError } = useGetProjects();
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return <Spinner />;
   }
 
   if (isError) {
@@ -31,12 +32,14 @@ export function ProjectList() {
   }
 
   return (
-    <List>
-      {data?.map((project) => (
-        <li key={project.id}>
-          <ProjectCard project={project} />
-        </li>
-      ))}
-    </List>
+    <>
+      <List className="project-list">
+        {data?.map((project) => (
+          <li key={project.id}>
+            <ProjectCard project={project} />
+          </li>
+        ))}
+      </List>
+    </>
   );
 }
