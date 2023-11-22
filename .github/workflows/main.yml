@@ -38,4 +38,4 @@ jobs:
       - name: Deploy to Vercel
         run: |
           npm install -g vercel
-          vercel --token ${{ secrets.prolog-app }} --prod
+          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
