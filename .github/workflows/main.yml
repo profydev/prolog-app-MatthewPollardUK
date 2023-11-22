@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: deploy to vercel
 
 on:
   # runs on pushes to the main branch
@@ -38,4 +38,4 @@ jobs:
       - name: Deploy to Vercel
         run: |
           npm install -g vercel
-          echo "yes" | vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --confirm
+          echo "yes" | vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
