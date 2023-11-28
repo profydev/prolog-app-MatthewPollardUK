@@ -3,7 +3,6 @@ import { color, textFont } from "@styles/theme";
 import { useId, useState } from "react";
 import styled from "styled-components";
 
-// types
 type SelectProps = {
   placeholder?: React.ReactNode;
   children: React.ReactNode;
@@ -19,7 +18,6 @@ type OptionProps = {
   value: string;
 };
 
-// styles
 const Label = styled.label`
   display: flex;
   flex-direction: column;
