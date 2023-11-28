@@ -1,222 +1,214 @@
-import React, { useState, useRef } from "react";
-import styled, { css } from "styled-components";
+import * as RadixSelect from "@radix-ui/react-select";
 import { color, textFont } from "@styles/theme";
+import { useId, useState } from "react";
+import styled from "styled-components";
 
+// types
 type SelectProps = {
-  options: Array<string>;
-  label?: string;
-  hint?: string;
-  icon?: string;
-  error?: string;
-  hasError?: boolean;
+  placeholder?: React.ReactNode;
+  children: React.ReactNode;
   disabled?: boolean;
+  label?: React.ReactNode;
+  defaultValue?: string;
+  error?: string | boolean;
+  hint?: string;
+  onValueChange?: (value: string) => void;
+};
+type OptionProps = {
+  children: React.ReactNode;
+  value: string;
 };
 
-const SelectContain = styled.div`
-  width: 320px;
-  & div input:disabled & div {
-    background: #d0d5dd;
-  }
-`;
-
-const OuterLabel = styled.span`
-  ${textFont("sm", "medium")};
-  color: ${color("gray", 700)};
-`;
-
-const DropdownContain = styled.div<{ isError?: boolean; isOpen: boolean }>`
+// styles
+const Label = styled.label`
   display: flex;
-  position: relative;
+  flex-direction: column;
+  gap: 0.5em;
+  font-size: 0.875rem;
+`;
+const Trigger = styled(RadixSelect.Trigger)<SelectProps>`
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid ${({ error }) => color(error ? "error" : "gray", 300)};
+  background: #fff;
+  ${textFont("md", "regular")};
+  display: flex;
+  padding: 0.625em 0.875em;
   align-items: center;
-  width: 100%;
-  height: 44px;
-  margin: 6px auto;
-  padding: 10px 14px;
-  box-sizing: border-box;
-  box-radius: 8px;
-  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
-  & input {
-    position: absolute;
-    width: 0;
-    height: 0;
-    opacity: 0;
+  justify-content: space-between;
+  gap: 8px;
+  align-self: stretch;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  cursor: pointer;
+  color: ${color("gray", 900)};
+  &:focus {
+    outline: none;
+    box-shadow:
+      0px 0px 0px 4px
+        ${({ error }) => (error ? color("error", 200) : color("primary", 200))},
+      0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   }
-  ${(props) => {
-    if (props.isError) {
-      return css`
-    border: 1px solid ${color("error", 300)};
-    outline: ${props.isOpen && "none"} !important;
-    &:focus {
-      outline: 4px solid #fef3f2;
-      `;
-    } else {
-      return css`
-        border: 1px solid
-          ${props.isOpen ? color("primary", 300) : color("gray", 300)};
-        outline: ${props.isOpen && " 4px solid #F9F5FF"};
-
-        &:focus {
-          outline: 4px solid #f9f5ff;
-          border: 1px solid ${color("primary", 300)};
-        }
-      `;
-    }
-  }}
+  &:disabled {
+    border: 1px solid ${color("gray", 300)};
+    background: ${color("gray", 50)};
+    cursor: not-allowed;
+  }
+  &:disabled * {
+    color: ${color("gray", 500)};
+  }
+  &[data-placeholder] {
+    color: ${color("gray", 500)};
+  }
+`;
+const Content = styled(RadixSelect.Content)`
+  z-index: 2;
+  width: var(--radix-select-trigger-width);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow:
+    0px 4px 6px -2px rgba(16, 24, 40, 0.05),
+    0px 12px 16px -4px rgba(16, 24, 40, 0.1);
 `;
 
-const SelectInput = styled.input`
-  border: none;
-  &:focus {
-    border: none;
+const Item = styled(RadixSelect.Item)`
+  font-size: 1rem;
+  color: ${color("gray", 900)};
+  padding: 0.625em 0.875em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &[data-highlighted] {
+    background: ${color("primary", 50)};
     outline: none;
   }
 `;
 
-const InnerLabel = styled.span`
-  ${textFont("md", "regular")};
-  &:focus-within {
-    color: red;
-  }
+const Hint = styled.p`
+  margin: 0.25em 0 0 0;
+  font-size: 0.875rem;
+  color: ${color("gray", 500)};
 `;
-
-const DownArrow = styled.img`
-  cursor: pointer;
-  margin-left: auto;
-`;
-
-const Icon = styled.img`
-  display: block;
-  margin-right: 11.33px;
-  height: 20px;
-  max-width: 20px;
-`;
-
-const DropdownListContain = styled.div`
-  position: absolute;
-  width: 320px;
-  top: 3rem;
-  left: 0;
-`;
-
-const DropdownList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 0;
-  background: #ffffff;
-  box-sizing: border-box;
-  box-radius: 8px;
-  ${textFont("md", "regular")};
-  box-shadow:
-    0px 12px 16px -4px rgba(16, 24, 40, 0.1),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.05);
-`;
-
-const DropdownItem = styled.li<{ isSelected: boolean }>`
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  padding: 10px 0px;
-
-  img.user-icon {
-    padding-left: 14px;
-  }
-  ${(props) =>
-    props.isSelected &&
-    css`
-      background-image: url("icons/check.svg");
-      background-repeat: no-repeat;
-      background-color: ${color("primary", 25)};
-      background-position: 95% 50%;
-    `}
-`;
-
-const ErrorText = styled.span`
-  ${textFont("sm", "regular")};
+const Error = styled.p`
+  margin: 0.25em 0 0 0;
+  font-size: 0.875rem;
   color: ${color("error", 500)};
 `;
 
-const HintText = styled.span`
-  ${textFont("sm", "regular")};
-  color: ${color("gray", 500)};
-`;
-
 export function Select({
-  options,
+  placeholder,
+  children,
   label,
+  defaultValue,
   hint,
-  icon,
-  error,
-  hasError,
-  disabled,
+  onValueChange,
+  error = false,
+  disabled = false,
 }: SelectProps) {
-  const [Selected, setSelected] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [state, setState] = useState("");
+  const uuid = useId();
+  const hintId = `${uuid}Hint`;
+  const errorId = `${uuid}Error`;
+  const errorIsString = typeof error === "string";
+  const ariaDescribedBy = error ? (errorIsString ? errorId : "") : hintId;
 
-  const currentFocus = useRef<HTMLInputElement>(null);
+  const clearSelect = (e: React.PointerEvent<SVGSVGElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setState("");
+    if (onValueChange) onValueChange("");
+  };
+
+  const handleValueChange = (value: string) => {
+    setState(value);
+    if (onValueChange) onValueChange(value);
+  };
 
   return (
-    <SelectContain>
-      <OuterLabel>{label}</OuterLabel>
-      <DropdownContain
-        ref={currentFocus}
-        tabIndex={1}
-        isOpen={isOpen}
-        isError={hasError}
+    <Label htmlFor={uuid}>
+      {label}
+      <RadixSelect.Root
+        disabled={disabled}
+        defaultValue={defaultValue}
+        value={state}
+        onValueChange={handleValueChange}
       >
-        <SelectInput disabled={disabled} type={"text"} />
-        {icon && <Icon src={icon} />}
-
-        <InnerLabel
-          style={{
-            color: !Selected ? "#667085" : "#101828",
-          }}
+        <Trigger
+          id={uuid}
+          aria-invalid={Boolean(error)}
+          aria-describedby={ariaDescribedBy}
+          error={typeof error === "string" ? error : ""}
         >
-          {!Selected ? "Select team member" : Selected}
-        </InnerLabel>
-        <DownArrow
-          onClick={() => {
-            if (!disabled) {
-              setIsOpen(!isOpen);
-            }
-          }}
-          src="/icons/chevron-down.svg"
-        />
+          <RadixSelect.Value placeholder={placeholder} />
+          <RadixSelect.Icon asChild>
+            {state ? (
+              <svg
+                id="cross"
+                xmlns="http://www.w3.org/2000/svg"
+                width={20}
+                height={20}
+                viewBox="0 0 20 20"
+                fill="none"
+                onPointerDown={clearSelect}
+              >
+                <path
+                  d="M5 5L15 15M15 5L5 15"
+                  stroke="#667085"
+                  strokeWidth={1.66667}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={20}
+                height={20}
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="m5 7.5 5 5 5-5"
+                  stroke="#667085"
+                  strokeWidth={1.667}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+          </RadixSelect.Icon>
+        </Trigger>
+        {hint && !error && <Hint>{hint}</Hint>}
+        {errorIsString && <Error id="errorHint">{error}</Error>}
+        <Content position="popper">
+          <RadixSelect.Viewport>{children}</RadixSelect.Viewport>
+        </Content>
+      </RadixSelect.Root>
+    </Label>
+  );
+}
 
-        {isOpen && (
-          <DropdownListContain>
-            <DropdownList>
-              {options.map((option) => {
-                return (
-                  <DropdownItem
-                    onClick={() => {
-                      setIsOpen(false);
-                      setSelected(option);
-
-                      if (currentFocus.current != null) {
-                        currentFocus.current.blur();
-                      }
-                    }}
-                    key={option}
-                    isSelected={Selected === option}
-                  >
-                    {icon && (
-                      <Icon
-                        src={icon}
-                        alt="icon for dropdown"
-                        className="user-icon"
-                      />
-                    )}
-                    {option}
-                  </DropdownItem>
-                );
-              })}
-            </DropdownList>
-          </DropdownListContain>
-        )}
-      </DropdownContain>
-      {error ? <ErrorText>{error}</ErrorText> : <HintText>{hint}</HintText>}
-    </SelectContain>
+export function Option({ children, value }: OptionProps) {
+  return (
+    <Item value={value}>
+      <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
+      <RadixSelect.ItemIndicator>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="11"
+          viewBox="0 0 16 11"
+          fill="none"
+        >
+          <path
+            d="M14.6668 1L5.50016 10.1667L1.3335 6"
+            stroke="#7F56D9"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </RadixSelect.ItemIndicator>
+    </Item>
   );
 }
