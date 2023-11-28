@@ -1,3 +1,4 @@
+
 import * as RadixSelect from "@radix-ui/react-select";
 import { color, textFont } from "@styles/theme";
 import { useId, useState } from "react";
@@ -210,5 +211,6 @@ export function Option({ children, value }: OptionProps) {
         </svg>
       </RadixSelect.ItemIndicator>
     </Item>
+
   );
 }
