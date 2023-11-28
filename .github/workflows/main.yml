@@ -26,7 +26,7 @@ jobs:
       - run: npm ci
       # run ESLint & Prettier
       - run: npm run lint
-      - run: npm run prettier
+      - run: npm run prettier  -- --write
       # verify that there are no type and build errors
       - run: npm run build
       # run tests with Cypress
